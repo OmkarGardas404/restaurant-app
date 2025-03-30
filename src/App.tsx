@@ -1,15 +1,29 @@
+import { Route, Routes } from "react-router-dom";
+import { routes } from "./routes/routes";
+import { Suspense, FC, lazy } from "react";
 
-import './App.css'
-import { Button } from './components/ui/button'
+const ErrorBoundry = lazy(() => import("@/pages/handlers/ErrorBoundry"));
 
-function App() {
-
+const App: FC = () => {
   return (
     <>
-    <h1 className='text-xl'>Hello</h1>
-    <Button variant="destructive" className='text-black'>click me</Button>
+      <Suspense fallback={<main className="flex items-center justify-between min-h-screen">Loading...</main>}>
+        <ErrorBoundry>
+          <Routes>
+            {routes.map((obj) => {
+              return (
+                <Route
+                  key={obj.path}
+                  path={obj.path}
+                  element={<obj.element />}
+                />
+              );
+            })}
+          </Routes>
+        </ErrorBoundry>
+      </Suspense>
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;
