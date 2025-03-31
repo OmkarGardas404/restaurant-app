@@ -38,6 +38,9 @@ const Login = () => {
       try {
         const response = await loginService(formData);
         console.log(response);
+        sessionStorage.setItem("token",response.accessToken);
+        sessionStorage.setItem("role",response.role);
+        sessionStorage.setItem("username",response.username);
         navigate("/");
       } catch (error) {
         console.error(error);

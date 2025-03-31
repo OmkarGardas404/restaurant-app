@@ -1,9 +1,15 @@
-import React from 'react'
+import { HeroSection } from '@/components/HeroSection'
+import { Locations } from '@/components/Locations'
+import { Navbar } from '@/components/Navbar'
+import { PopularDishes } from '@/components/PopularDishes'
 
 const Landing = () => {
   return (
     <div>
-      Landing
+      <Navbar/>
+      <HeroSection />
+      <PopularDishes />
+      <Locations />
     </div>
   )
 }

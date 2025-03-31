@@ -1,5 +1,7 @@
 export enum Paths {
     LANDING='/',
     LOGIN='/login',
-    SIGNUP='/signup'
+    SIGNUP='/signup',
+    BOOKTABLE='/bookTable',
+    RESERVATION='/reservation'
 }
