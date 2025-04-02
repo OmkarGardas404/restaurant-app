@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import logo from "../assets/vegetarian-_1_ 1.svg";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 export const Navbar = () => {
   const [isUser, setIsUser] = useState(false);
   useEffect(() => {
@@ -18,18 +18,24 @@ export const Navbar = () => {
         </p>
       </div>
       <div className="flex gap-8">
-        <Link
+        <NavLink
           to="/"
-          className="text-green-600  border-b-2 border-green-600 pb-1"
+        //   className="text-green-600  border-b-2 border-green-600 pb-1"
+        className={({ isActive }) =>
+            isActive ? "text-green-500 font-bold underline" : "text-gray-600"
+          }
         >
           Main Page
-        </Link>
-        <Link
+        </NavLink>
+        <NavLink
           to="/bookTable"
-          className="text-gray-600  hover:border-b-2 border-green-600 transition"
+        //   className="text-gray-600  hover:border-b-2 border-green-600 transition"
+        className={({ isActive }) =>
+            isActive ? "text-green-500 font-bold underline" : "text-gray-600"
+          }
         >
           Book a Table
-        </Link>
+        </NavLink>
         {isUser && (
           <Link
             to="/reservation"
@@ -45,7 +51,7 @@ export const Navbar = () => {
         variant="outline"
         className="hover:cursor-pointer text-green-600 border-green-500 font-semibold"
       >
-        {isUser ? <p>User</p> : <p>SignIn</p>}
+        {isUser ? <p>User</p> : <Link to='/login'>SignIn</Link>}
       </Button>
     </nav>
   );

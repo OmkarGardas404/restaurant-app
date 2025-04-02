@@ -3,5 +3,7 @@ export enum Paths {
     LOGIN='/login',
     SIGNUP='/signup',
     BOOKTABLE='/bookTable',
-    RESERVATION='/reservation'
+    RESERVATION='/reservation',
+    LOCATION='/location'
 }
+export const getLocationPath = (id: string | number) => `${Paths.LOCATION}/${id}`;

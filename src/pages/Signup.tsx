@@ -96,7 +96,6 @@ const Registration: React.FC = () => {
     };
 
     setErrors(newErrors);
-
     // Check if any errors exist
     if (Object.values(newErrors).some((error) => error)) {
       console.log("Form validation failed!");
@@ -107,7 +106,7 @@ const Registration: React.FC = () => {
     try {
       const responseData = await registrationService(requestData);
       console.log(responseData);
-      navigate('/login');
+      navigate("/login");
     } catch (error) {
       console.error("Error : ", error);
     }
@@ -144,6 +143,13 @@ const Registration: React.FC = () => {
                       : "border-gray-300 focus:border-green-600 focus:ring focus:ring-green-300"
                   } rounded-lg`}
                 />
+                <p className="text-gray-500 text-xs mt-1">e.g.Janson</p>
+                {errors.firstName && (
+                  <p className="text-red-500 text-xs mt-1">
+                    First name can be up to 50 characters and only contain Latin
+                    letters, hyphens, and apostrophes are allowed.
+                  </p>
+                )}
               </div>
               <div>
                 <Label
@@ -163,6 +169,13 @@ const Registration: React.FC = () => {
                       : "border-gray-300 focus:border-green-600 focus:ring focus:ring-green-300"
                   } rounded-lg`}
                 />
+                <p className="text-gray-500 text-xs mt-1">e.g.Doe</p>
+                {errors.lastName && (
+                  <p className="text-red-500 text-xs mt-1">
+                    Last name can be up to 50 characters and only contain Latin
+                    letters, hyphens, and apostrophes are allowed.
+                  </p>
+                )}
               </div>
             </div>
 
@@ -185,6 +198,15 @@ const Registration: React.FC = () => {
                     : "border-gray-300 focus:border-green-600 focus:ring focus:ring-green-300"
                 } rounded-lg`}
               />
+              <p className="text-gray-500 text-xs mt-1">
+                e.g.username@domain.com
+              </p>
+              {errors.email && (
+                <p className="text-red-500 text-xs mt-1">
+                  Invalid email address. Please ensure it follows the format:
+                  username@domain.com
+                </p>
+              )}
             </div>
 
             <div className="mt-4 sm:mt-5">
