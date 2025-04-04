@@ -26,6 +26,10 @@ export const routes: readonly RouteObject[] = [
     {
         element: lazy(() => import('@/pages/LocationDetails')),
         path:`${Paths.LOCATION}/:id`
+    },
+    {
+        element: lazy(() => import('@/pages/Reservation')),
+        path:Paths.RESERVATION
     }
 
 ]

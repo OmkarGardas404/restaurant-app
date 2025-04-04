@@ -10,6 +10,8 @@ interface ReservationModalProps {
   guests: number;
   setGuests: React.Dispatch<React.SetStateAction<number>>;
   timeSlot: string;
+  tableNumber:string;
+  locationId:string;
 }
 const ReservationModal = ({
   isOpen,
@@ -19,7 +21,10 @@ const ReservationModal = ({
   guests,
   setGuests,
   timeSlot,
+  tableNumber,
+  locationId,
 }: ReservationModalProps) => {
+    console.log(tableNumber)
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -27,6 +32,24 @@ const ReservationModal = ({
       document.body.style.overflow = "auto";
     }
   }, [isOpen]);
+  const handleReservation = async () => {
+      const [timeFrom, timeTo] = timeSlot.split(" - ").map((t) => t.trim())
+      console.log(date, guests, timeSlot, timeFrom, timeTo, locationId, tableNumber);
+      const userData = {locationId, tableNumber, date, guestsNumber:guests, timeFrom, timeTo}
+    try {
+        const response = await fetch(import.meta.env.VITE_BOOKING_CLIENTS, {
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json",
+            },
+            body: JSON.stringify(userData)
+
+        });
+        console.log(response)
+    }catch(error) {
+        console.error(error)
+    }
+  }
   if (!isOpen) return null;
   return createPortal(
     <>
@@ -81,7 +104,7 @@ const ReservationModal = ({
           </div>
 
           {/* Reservation Button */}
-          <button className="w-full bg-green-600 text-white p-2 rounded-lg hover:bg-green-700">
+          <button className="w-full bg-green-600 text-white p-2 rounded-lg hover:bg-green-700" onClick={handleReservation}>
             Make a Reservation
           </button>
         </div>

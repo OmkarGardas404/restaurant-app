@@ -7,7 +7,7 @@ const ErrorBoundry = lazy(() => import("@/pages/handlers/ErrorBoundry"));
 const App: FC = () => {
   return (
     <>
-      <Suspense fallback={<main className="flex items-center justify-between min-h-screen">Loading...</main>}>
+      <Suspense fallback={<div className="flex items-center justify-center min-h-screen w-full">Loading...</div>}>
         <ErrorBoundry>
           <Routes>
             {routes.map((obj) => {

@@ -1,6 +1,6 @@
-import React from "react";
 import { FaMapMarkerAlt, FaStar } from "react-icons/fa";
 import Picture from "@/assets/Picture.png";
+import { Link } from "react-router-dom";
 
 const LocationHeroSection = () => {
   return (
@@ -15,9 +15,14 @@ const LocationHeroSection = () => {
             rating <FaStar className="ml-1" />
           </span>
         </div>
-        <p className="text-gray-600 mt-4 leading-relaxed">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit animi repellat, officia aliquam neque accusamus, corporis nemo omnis porro a atque deleniti autem natus nihil cum earum fugiat hic vitae eligendi architecto!</p>
+        <p className="text-gray-600 mt-4 leading-relaxed">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit animi
+          repellat, officia aliquam neque accusamus, corporis nemo omnis porro a
+          atque deleniti autem natus nihil cum earum fugiat hic vitae eligendi
+          architecto!
+        </p>
         <button className="mt-6 bg-green-600 text-white px-6 py-2 rounded-md text-lg font-medium hover:bg-green-700">
-          Book a Table
+          <Link to="/bookTable">Book a Table</Link>
         </button>
       </div>
 

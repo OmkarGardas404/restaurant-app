@@ -1,0 +1,56 @@
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Reservation } from "@/types/FormData";
+import { cn } from "@/lib/utils";
+ 
+interface ReservationCardProps {
+  reservation: Reservation;
+  onEdit?: () => void;
+  onCancel?: () => void;
+  onFeedback?: () => void;
+}
+ 
+const statusColors: Record<Reservation["status"], string> = {
+  RESERVED: "bg-yellow-200 text-yellow-700",
+  "In Progress": "bg-blue-200 text-blue-700",
+  FINISHED: "bg-green-200 text-green-700",
+  Cancelled: "bg-red-200 text-red-700",
+};
+ 
+export default function ReservationCard({ reservation, onEdit, onCancel, onFeedback }: ReservationCardProps) {
+    console.log(reservation);
+  return (
+    <Card className="w-full max-w-sm">
+      <CardHeader className="flex justify-between">
+        <div>
+          <h3 className="text-lg font-semibold">{reservation.location}</h3>
+          <Badge className={cn("px-3 py-1", statusColors[reservation.status])}>
+            {reservation.status}
+          </Badge>
+        </div>
+      </CardHeader>
+      <CardContent>
+        <p><strong>Date:</strong> {reservation.date}</p>
+        <p><strong>Time:</strong> {reservation.timeFrom} - {reservation.timeTo}</p>
+        <p><strong>Guests:</strong> {reservation.guestsNumber}</p>
+      </CardContent>
+      <CardFooter className="flex space-x-2">
+        {reservation.status === "RESERVED" && (
+          <>
+            <Button variant="outline" onClick={onCancel}>Cancel</Button>
+            <Button onClick={onEdit}>Edit</Button>
+          </>
+        )}
+        {reservation.status === "FINISHED" && (
+          <Button onClick={onFeedback}>Update Feedback</Button>
+        )}
+        {reservation.status === "In Progress" && (
+          <Button onClick={onFeedback}>Leave Feedback</Button>
+        )}
+      </CardFooter>
+    </Card>
+  );
+}
+ 
+ 
