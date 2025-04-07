@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import Logo from "../assets/vegetarian-_1_ 1.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { registrationService } from "@/api/registrationService";
+import { toast } from "react-toastify";
 
 interface formType {
   firstName: string;
@@ -106,6 +107,7 @@ const Registration: React.FC = () => {
     try {
       const responseData = await registrationService(requestData);
       console.log(responseData);
+      toast.success(responseData.message)
       navigate("/login");
     } catch (error) {
       console.error("Error : ", error);

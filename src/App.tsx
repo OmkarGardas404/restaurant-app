@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import { routes } from "./routes/routes";
 import { Suspense, FC, lazy } from "react";
+import { ToastContainer } from 'react-toastify';
 
 const ErrorBoundry = lazy(() => import("@/pages/handlers/ErrorBoundry"));
 
@@ -20,6 +21,7 @@ const App: FC = () => {
               );
             })}
           </Routes>
+          <ToastContainer />
         </ErrorBoundry>
       </Suspense>
     </>

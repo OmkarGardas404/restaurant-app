@@ -3,6 +3,7 @@ import ReservationCard from "@/components/ReservationCard";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Navbar } from "@/components/Navbar";
 import { Reservation } from "@/types/FormData";
+import { toast } from "react-toastify";
  
 export default function ReservationsPage() {
   const [reservations, setReservations] = useState<Reservation[]>([]);
@@ -14,30 +15,66 @@ export default function ReservationsPage() {
     setIsDialogOpen(true);
   };
  
-  const handleCancel = (id: string) => {
-    console.log(id)
-    // setReservations(reservations.map(r => (r.id === id ? { ...r, status: "Cancelled" } : r)));
+  const handleCancel = async (id: string) => {
+    try {
+      const URL = `${import.meta.env.VITE_DELETE_RESERVATION}/${id}`;
+  
+      // Delete reservation
+      const deleteResponse = await fetch(URL, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("username")}`
+        }
+      });
+      if (!deleteResponse.ok) {
+        throw new Error("Failed to delete the reservation");
+      }
+  
+      toast.success("Reservation deleted successfully!");
+  
+      // Refetch reservations
+      const getResponse = await fetch(import.meta.env.VITE_RESERVATIONS, {
+        method: "GET",
+        headers: {
+          Authorization: `${sessionStorage.getItem("username")}`
+        }
+      });
+  
+      if (!getResponse.ok) {
+        throw new Error("Failed to fetch reservations");
+      }
+  
+      const responseData = await getResponse.json();
+      const data = responseData.map((reservation: Reservation) => ({
+        ...reservation,
+        locationAddress: reservation.locationAddress
+      }));
+      setReservations(data);
+    } catch (error) {
+      console.error("Failed to delete reservation:", error);
+      // toast.error("Failed to delete reservation.");
+    }
   };
-
+ 
   useEffect(() => {
     const FetchResevations = async () => {
         try {
             const response = await fetch(import.meta.env.VITE_RESERVATIONS, {
                 method:"GET",
                 headers: {
-                    "Content-Type":"application/json"
+                    "Content-Type":"application/json",
+                    Authorization: `Bearer ${sessionStorage.getItem("token")}`,
                 }
             });
             const responseData = await response.json();
             setReservations(responseData);
-            console.log(responseData)
         }catch(error) {
             console.error(error)
         }
     }
     FetchResevations();
   },[]);
- 
+
   return (
     <div className="bg-background min-h-screen">
       <Navbar />
@@ -51,6 +88,7 @@ export default function ReservationsPage() {
               onEdit={() => handleEdit(reservation)}
               onCancel={() => handleCancel(reservation.id)}
               onFeedback={() => {}}
+              locationId={reservation.locationId}
             />
           ))}
         </div>

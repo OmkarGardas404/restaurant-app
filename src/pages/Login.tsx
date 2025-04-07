@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import Logo from "../assets/vegetarian-_1_ 1.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { loginService } from "@/api/loginService";
+import { toast } from "react-toastify";
 
 interface formType {
   email: string;
@@ -41,6 +42,7 @@ const Login = () => {
         sessionStorage.setItem("token",response.accessToken);
         sessionStorage.setItem("role",response.role);
         sessionStorage.setItem("username",response.username);
+        toast.success("Logged in successfully");
         navigate("/");
       } catch (error) {
         console.error(error);

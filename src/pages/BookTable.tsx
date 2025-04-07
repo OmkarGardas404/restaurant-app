@@ -11,8 +11,8 @@ import {
 import { RiArrowDropDownLine } from "react-icons/ri";
 
 interface LocationType {
-    address:string;
-    id:string;
+  address: string;
+  id: string;
 }
 
 const BookTable = () => {
@@ -28,8 +28,9 @@ const BookTable = () => {
   const [, setAddress] = useState("");
 
   const handleFindTable = async () => {
-    const apiUrl = `${import.meta.env.VITE_TABLES}?locationId=${locationId}&date=${date}&guests=${guests}&time=${time}`;
-    console.log(apiUrl)
+    const apiUrl = `${
+      import.meta.env.VITE_TABLES
+    }?locationId=${locationId}&date=${date}&guests=${guests}`;
     try {
       const response = await fetch(apiUrl, {
         method: "GET",
@@ -42,7 +43,6 @@ const BookTable = () => {
 
       const responseData = await response.json();
       setTables(responseData);
-      console.log(responseData)
     } catch (error) {
       console.error(error);
     }
@@ -56,10 +56,8 @@ const BookTable = () => {
           headers: { "Content-Type": "application/json" },
         });
         const responseData = await response.json();
-        console.log(responseData)
-        setLocations(responseData["tm16-locations-dev5"]);
-        setLocationId(responseData["tm16-locations-dev5"][0].id);
-        setAddress(responseData["tm16-locations-dev5"][0].address);
+        setLocations(responseData["tm16-locations-dev1"]);
+        setAddress(responseData["tm16-locations-dev1"][0].address);
       } catch (error) {
         console.error(error);
       }
@@ -97,7 +95,9 @@ const BookTable = () => {
                     key={loc.id}
                     className="p-2 hover:bg-green-100 cursor-pointer"
                     onClick={() => {
+                      console.log(loc.id)
                       setSelectedLocation(loc.address);
+                      setLocationId(loc.id)
                       setShowLocationDropdown(false);
                     }}
                   >
@@ -115,6 +115,7 @@ const BookTable = () => {
                 type="date"
                 className="bg-transparent outline-none w-full"
                 value={date}
+                min={new Date().toISOString().split("T")[0]}
                 onChange={(e) => setDate(e.target.value)}
               />
             </label>
@@ -165,7 +166,7 @@ const BookTable = () => {
 
       {/* Table List */}
       <div className="p-4">
-        <TableList tables={tables} date={date} />
+        <TableList tables={tables} date={date}/>
       </div>
     </div>
   );

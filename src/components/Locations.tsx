@@ -1,7 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import Picture from "@/assets/Picture.png";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import { setLocations, setLoading } from "@/redux/slice";
 
 interface Locations {
     address:string;
@@ -13,13 +16,13 @@ interface Locations {
 
 const Locations = () => {
   const navigate = useNavigate();
-  const [locations, setLocations] = useState<Locations[]>([]);
-  const [loading, setLoading] = useState(true); // Loading state
+  const dispatch = useDispatch();
+  const {locations, loading} = useSelector((state: RootState) => state.locations)
 
   useEffect(() => {
     const FetchLocations = async () => {
       try {
-        setLoading(true); // Start loading
+        dispatch(setLoading(true));
         const response = await fetch(import.meta.env.VITE_LOCATIONS, {
           method: "GET",
           headers: {
@@ -27,15 +30,16 @@ const Locations = () => {
           },
         });
         const responseData = await response.json();
-        setLocations(responseData["tm16-locations-dev5"]);
+        // setLocations(responseData["tm16-locations-dev1"]);
+        dispatch(setLocations(responseData["tm16-locations-dev1"]));
       } catch (error) {
         console.error(error);
       } finally {
-        setLoading(false); // Stop loading after fetching
+        dispatch(setLoading(false));
       }
     };
     FetchLocations();
-  }, []);
+  }, [dispatch]);
   return (
     <section className="p-8">
       <h2 className="text-2xl font-semibold mb-4">Locations</h2>

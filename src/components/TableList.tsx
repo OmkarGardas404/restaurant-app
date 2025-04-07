@@ -8,13 +8,14 @@ interface Table {
   seating: number;
   availableSlots: string[];
   image: string;
-  tableNumber:string
-  locationId:string;
+  tableNumber: string;
+  locationId: string;
+  capacity:number
 }
 
 interface TableListProps {
   tables: Table[];
-  date:string;
+  date: string;
 }
 
 const TableList: React.FC<TableListProps> = ({ tables, date }) => {
@@ -27,6 +28,7 @@ const TableList: React.FC<TableListProps> = ({ tables, date }) => {
     setSelectedSlot(slot);
     setIsModalOpen(true);
   };
+  console.log(tables);
   return (
     <div className="mt-6">
       {tables.length > 0 && (
@@ -47,12 +49,15 @@ const TableList: React.FC<TableListProps> = ({ tables, date }) => {
               className="w-40 h-32 rounded-lg object-cover"
             />
             <div className="ml-4">
-              <h4 className="font-semibold text-lg flex items-center">
-                <FaMapMarkerAlt className="text-green-600 mr-2" />{" "}
-                {table.locationAddress}
-              </h4>
+              <div className="flex items-center justify-between ">
+                <h4 className="font-semibold text-lg flex items-center">
+                  <FaMapMarkerAlt className="text-green-600 mr-2" />{" "}
+                  {table.locationAddress}
+                </h4>
+                <p>{table.tableNumber}</p>
+              </div>
               <p className="text-gray-600">
-                Table seating capacity: {table.seating} people
+                Table seating capacity: {table.capacity} people
               </p>
               <p className="text-gray-700 font-medium">Available slots:</p>
               <div className="flex flex-wrap gap-2 mt-2">

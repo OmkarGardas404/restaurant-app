@@ -1,8 +1,12 @@
 import { FaMapMarkerAlt, FaStar } from "react-icons/fa";
 import Picture from "@/assets/Picture.png";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 const LocationHeroSection = () => {
+  const {id} = useParams();
+  const location = useSelector((state: RootState) => state.locations.locations.find((loc) => loc.id === id?.trim()));
   return (
     <div className="mx-auto my-8 p-4  flex flex-col md:flex-row items-center md:items-start">
       {/* Left Side: Text Information */}
@@ -10,9 +14,9 @@ const LocationHeroSection = () => {
         <h1 className="text-green-600 text-3xl font-bold">Green & tasty</h1>
         <div className="flex items-center mt-2">
           <FaMapMarkerAlt className="text-gray-600" />
-          <p className="ml-2 text-gray-700 font-medium">address</p>
+          <p className="ml-2 text-gray-700 font-medium">{location?.address}</p>
           <span className="ml-auto flex items-center text-yellow-500 font-bold">
-            rating <FaStar className="ml-1" />
+            {location?.rating} <FaStar className="ml-1" />
           </span>
         </div>
         <p className="text-gray-600 mt-4 leading-relaxed">

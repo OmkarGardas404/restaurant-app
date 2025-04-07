@@ -13,7 +13,7 @@ export interface FormData {
     confirmPassword?: string;
   }
    
-  export type ReservationStatus = "RESERVED" | "In Progress" | "FINISHED" | "Cancelled";
+  export type ReservationStatus = "RESERVED" | "IN_PROGRESS" | "FINISHED" | "CANCELLED";
    
   export interface Reservation {
     id: string;
@@ -23,6 +23,8 @@ export interface FormData {
     timeTo:string;
     guestsNumber: number;
     status: ReservationStatus;
+    locationAddress:string;
+    locationId:string;
   }
    
    

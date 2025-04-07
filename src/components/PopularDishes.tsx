@@ -34,7 +34,6 @@ export const PopularDishes = () => {
     };
     FetchPopularDishes();
   }, []);
-  console.log(dishes)
   return (
     <section className="p-8">
       <h2 className="text-2xl font-semibold mb-4">Most Popular Dishes</h2>
